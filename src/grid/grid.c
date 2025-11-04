@@ -19,7 +19,7 @@ void imprimirMatriz(Grid *grid) {
     }
 }
 
-void DrawGameGrid(Grid *grid) {
+void Desenhar(Grid *grid) {
     Color *colors = getCellColors();
     for (int i = 0; i < LINHAS; i++) {
         for (int j = 0; j < COLUNAS; j++) {

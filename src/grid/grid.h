@@ -13,6 +13,6 @@ typedef struct {
 
 void inicializarMatriz(Grid *grid);
 void imprimirMatriz(Grid *grid);
-void DrawGameGrid(Grid *grid);
+void Desenhar(Grid *grid);
 
 #endif
