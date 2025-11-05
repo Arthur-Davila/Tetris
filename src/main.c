@@ -13,6 +13,7 @@ int main(void) {
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
+        handleInput(&game.currentBlock);
         BeginDrawing();
         ClearBackground(RAYWHITE);
         DrawGame(&game);

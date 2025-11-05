@@ -22,5 +22,8 @@ void DrawGame(Game *game);
 BlockNode* create_node(Block block);
 BlockNode* getBlocks(void);
 Block getRandomBlock(BlockNode **head);
-
+void handleInput(Block *block); // Protótipo para função de entrada do jogador
+void moveBlockLeft(Block *block); // Protótipo para mover bloco para a esquerda
+void moveBlockRight(Block *block); // Protótipo para mover bloco para a direita
+void moveBlockDown(Block *block); // Protótipo para mover bloco para baixo
 #endif

@@ -1,4 +1,5 @@
 #include "game.h"
+#include "raylib.h"
 #include <stdlib.h>
 #include <stdio.h> // Para fprintf (bom para debug)
 #include <time.h>
@@ -11,8 +12,6 @@ void initGame(Game *game) {
     // Inicializa a lista de blocos disponíveis e pega os dois primeiros
     game->nextBlocks = getBlocks();
     game->currentBlock = getRandomBlock(&game->nextBlocks);
-    moveBlock(3,5, &game->currentBlock); // Posiciona o bloco inicial no centro superior
-    printf("Bloco atual posicionado em: (%d, %d)\n", game->currentBlock.pos[0][2].x, game->currentBlock.pos[0][2].y);
     game->nextBlock = getRandomBlock(&game->nextBlocks);
 }
 
@@ -34,11 +33,7 @@ BlockNode* create_node(Block block) {
     node->next = NULL;
     return node;
 }
-void destroyBlock(Block block) {
-    for (int i = 0; i < 4; i++) {
-        free(block.pos[i]);
-    }
-}
+
 BlockNode* getBlocks(void) {
     BlockNode *head = NULL, *aux = NULL;
     
@@ -90,4 +85,24 @@ Block getRandomBlock(BlockNode **head) {
 
     free(aux); // Libera o nó em si
     return chosen;
+}
+void handleInput(Block *block) {
+    if (IsKeyPressed(KEY_RIGHT)) {
+        moveBlockRight(block);
+    }
+    if (IsKeyPressed(KEY_LEFT)) {
+        moveBlockLeft(block);
+    }
+    if (IsKeyPressed(KEY_DOWN)) {
+        moveBlockDown(block);
+    }
+}
+void moveBlockLeft(Block *block) {
+    moveBlock(-1, 0, block);
+}
+void moveBlockRight(Block *block) {
+    moveBlock(1, 0, block);
+}
+void moveBlockDown(Block *block) {
+    moveBlock(0, 1, block);
 }
