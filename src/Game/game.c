@@ -86,17 +86,6 @@ Block getRandomBlock(BlockNode **head) {
     free(aux); // Libera o nó em si
     return chosen;
 }
-void handleInput(Block *block) {
-    if (IsKeyPressed(KEY_RIGHT)) {
-        moveBlockRight(block);
-    }
-    if (IsKeyPressed(KEY_LEFT)) {
-        moveBlockLeft(block);
-    }
-    if (IsKeyPressed(KEY_DOWN)) {
-        moveBlockDown(block);
-    }
-}
 void moveBlockLeft(Block *block) {
     if (outSide(block,-1,0)!= true) {
     moveBlock(-1, 0, block);
@@ -115,4 +104,30 @@ void moveBlockDown(Block *block) {
     if (outSide(block,0,1)!= true) {
     moveBlock(0, 1, block);
     }
+}
+
+void rotateBlock(Block *block) {
+    rotate();
+    
+    if (outSide(block,0,0)== true) {
+        undoRotate();
+    
+    }
+    
+}
+void handleInput(Block *block) {
+    if (IsKeyPressed(KEY_RIGHT)) {
+        moveBlockRight(block);
+    }
+    if (IsKeyPressed(KEY_LEFT)) {
+        moveBlockLeft(block);
+    }
+    if (IsKeyPressed(KEY_DOWN)) {
+        moveBlockDown(block);
+    }
+    if (IsKeyPressed(KEY_UP))
+    {
+        rotateBlock(block);
+    }
+    
 }

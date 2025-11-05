@@ -5,6 +5,18 @@
 #include "blocks/blocks.h"
 #include "grid/grid.h"
 #include "Game/game.h"
+
+double lastTime = 0;
+
+bool eventTriggered(double interval) {
+    double currentTime = GetTime();
+    if (currentTime - lastTime >= interval) {
+        lastTime = currentTime;
+        return true;
+    }
+    return false;
+
+}
 int main(void) {
     Game game;
     initGame(&game);
@@ -14,6 +26,9 @@ int main(void) {
 
     while (!WindowShouldClose()) {
         handleInput(&game.currentBlock);
+        if (eventTriggered(0.2)) {
+            moveBlockDown(&game.currentBlock);
+        }
         BeginDrawing();
         ClearBackground(RAYWHITE);
         DrawGame(&game);

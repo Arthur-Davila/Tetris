@@ -29,5 +29,7 @@ Block createBlockZ(void);
 Block createBlockI(void);
 void Draw(Block block);
 void moveBlock(int col, int row, Block *block);
+void rotate();
+void undoRotate();
 
 #endif
