@@ -29,3 +29,19 @@ void Desenhar(Grid *grid) {
         }
     }
 }
+bool outSide( Block *block,int posX, int posY) {
+    
+    for (int i = 0; i < 4; i++) {
+
+        if ((block->pos[rotatioState][i].x + posX) < 0 || (block->pos[rotatioState][i].y + posY) >=LINHAS || (block->pos[rotatioState][i].x + posX) >= COLUNAS) {
+
+            return true;
+        }
+        
+        
+
+    }
+    return false;
+
+}
+

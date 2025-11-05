@@ -289,7 +289,7 @@ void moveBlock(int col, int row, Block *block) {
         block->pos[rotatioState][i].y += block->offsetRow;
     }
     
-}   
+}
 
 void Draw(Block block) {
     for (int i = 0; i < 4; i++) {

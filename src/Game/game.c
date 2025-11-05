@@ -98,11 +98,21 @@ void handleInput(Block *block) {
     }
 }
 void moveBlockLeft(Block *block) {
+    if (outSide(block,-1,0)!= true) {
     moveBlock(-1, 0, block);
+    }
+    
+    
+    
 }
 void moveBlockRight(Block *block) {
+     if (outSide(block,1,0)!= true) {
     moveBlock(1, 0, block);
+    }
+    
 }
 void moveBlockDown(Block *block) {
+    if (outSide(block,0,1)!= true) {
     moveBlock(0, 1, block);
+    }
 }

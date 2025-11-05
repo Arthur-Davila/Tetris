@@ -8,7 +8,7 @@
 int main(void) {
     Game game;
     initGame(&game);
-
+    SetWindowTitle("Tetris Game");
     InitWindow(300, 620, "Raylib no Arch Linux");
     SetTargetFPS(60);
 
