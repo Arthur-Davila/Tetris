@@ -1,12 +1,8 @@
-// Game/game.h (Corrigido)
-
 #ifndef GAME_H
 #define GAME_H
 
 #include "../grid/grid.h"
-#include "../blocks/blocks.h" // Garante que Block está definido
-
-// 1. Nó da lista de blocos (DEVE VIR PRIMEIRO)
+#include "../blocks/blocks.h" 
 typedef struct BlockNode {
     Block block;
     struct BlockNode *next;

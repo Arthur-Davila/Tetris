@@ -4,11 +4,10 @@
 #include "colors/colors.h"
 #include "blocks/blocks.h"
 #include "grid/grid.h"
-
+#include "Game/game.h"
 int main(void) {
-    Grid grid;
-    inicializarMatriz(&grid);
-    Block blocos = createBlockO(); // cria o bloco T
+    Game game;
+    initGame(&game);
 
     InitWindow(300, 620, "Raylib no Arch Linux");
     SetTargetFPS(60);
@@ -16,16 +15,12 @@ int main(void) {
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        Desenhar(&grid);
-        Draw(blocos);
+        DrawGame(&game);
         EndDrawing();
     }
 
     CloseWindow();
 
-    for (int i = 0; i < 4; i++) {
-        free(blocos.pos[i]);
-    }
 
     return 0;
 }

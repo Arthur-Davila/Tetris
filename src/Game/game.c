@@ -1,29 +1,13 @@
 #include "game.h"
 #include <stdlib.h>
-#include <time.h> // Para seed rand
 #include <stdio.h> // Para fprintf (bom para debug)
-
-// --- Funções Auxiliares de Gerenciamento de Memória ---
-
-// Libera toda a memória dinâmica alocada DENTRO de uma struct Block.
-void destroyBlock(Block block) {
-    for (int i = 0; i < 4; i++) {
-        // Verifica se o ponteiro foi alocado antes de liberar
-        if (block.pos[i] != NULL) {
-            free(block.pos[i]);
-            block.pos[i] = NULL;
-        }
-    }
-}
-
-// --- Funções de Gerenciamento de Jogo ---
+#include <time.h>
 
 void initGame(Game *game) {
-    srand(time(NULL)); // Inicializa a semente randômica
     
+    srand(time(NULL));    
     // A função 'inicializarMatriz' está definida em grid.c
     inicializarMatriz(&game->grid);
-    
     // Inicializa a lista de blocos disponíveis e pega os dois primeiros
     game->nextBlocks = getBlocks();
     game->currentBlock = getRandomBlock(&game->nextBlocks);
@@ -31,9 +15,8 @@ void initGame(Game *game) {
 }
 
 void DrawGame(Game *game) {
-    DrawGameGrid(&game->grid);
-    // DrawBlock espera o bloco atual (a movimentação é gerenciada via gridRow/gridCol na struct)
-    DrawBlock(game->currentBlock); 
+    Desenhar(&game->grid); // Debug: Verifica a posição do bloco atual
+    Draw(game->currentBlock); 
     // TODO: Adicionar desenho do nextBlock
 }
 
@@ -42,7 +25,6 @@ void DrawGame(Game *game) {
 BlockNode* create_node(Block block) {
     BlockNode *node = malloc(sizeof(BlockNode));
     if (node == NULL) {
-        fprintf(stderr, "Erro de alocação de BlockNode\n");
         return NULL;
     }
     // A struct Block é copiada por valor.
@@ -50,45 +32,50 @@ BlockNode* create_node(Block block) {
     node->next = NULL;
     return node;
 }
-
+void destroyBlock(Block block) {
+    for (int i = 0; i < 4; i++) {
+        free(block.pos[i]);
+    }
+}
 BlockNode* getBlocks(void) {
     BlockNode *head = NULL, *aux = NULL;
     
-    // Chamadas às funções de criação de blocos.
-    // O array local 'all' armazena as structs Block (que contêm ponteiros alocados via malloc em blocks.c)
     Block all[7] = {
         createBlockI(), createBlockJ(), createBlockL(),
         createBlockO(), createBlockS(), createBlockT(), createBlockZ()
     };
 
     for (int i = 0; i < 7; i++) {
+        printf("%d,",all[i].pos[0][0].x); // Debug
+        printf("%d \n",all[i].pos[0][0].y); // Debug
         BlockNode *n = create_node(all[i]);
         if (!head) head = n;
         else aux->next = n;
         aux = n;
+
+   
     }
     return head;
 }
 
 Block getRandomBlock(BlockNode **head) {
     // Se a lista estiver vazia (a bag acabou), a preenche novamente
-    if (*head == NULL) *head = getBlocks();
+    if (*head == NULL) {
+        *head = getBlocks();
+    }
 
     int size = 0;
     BlockNode *aux = *head, *prev = NULL;
     while (aux) { size++; aux = aux->next; }
 
-    if (size == 0) { // Erro de segurança, embora getBlocks deva evitar isso.
-        fprintf(stderr, "Erro: Lista de blocos vazia.\n");
-        exit(EXIT_FAILURE);
-    }
-    
+   
     int idx = rand() % size;
     aux = *head;
 
     // Percorre até o índice
     for (int i = 0; i < idx; i++) {
-        prev = aux;
+        prev = aux;/* 
+        printf("ID do bloco: %d\n", aux->block.id); */
         aux = aux->next;
     }
 
@@ -99,9 +86,7 @@ Block getRandomBlock(BlockNode **head) {
     // Copia o bloco escolhido (a nova cópia será o currentBlock/nextBlock)
     Block chosen = aux->block; 
     
-    // CRÍTICO: O bloco que estava no nó ('aux->block') ALOCOU memória.
-    // Essa memória deve ser liberada ANTES de liberar o nó.
-    destroyBlock(aux->block);
+   
 
     free(aux); // Libera o nó em si
     return chosen;
