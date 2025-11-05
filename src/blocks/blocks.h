@@ -6,7 +6,6 @@
 
 extern int cellsize;
 extern int rotatioState;
-
 typedef struct {
     int x;
     int y;
@@ -16,6 +15,9 @@ typedef struct {
     Color color;
     Pos* pos[4]; // 4 rotações, cada uma com 4 posições
     int id;
+    int offsetCol;
+    int offsetRow;
+
 } Block;
 
 Block createBlockL(void);
@@ -26,5 +28,6 @@ Block createBlockS(void);
 Block createBlockZ(void);
 Block createBlockI(void);
 void Draw(Block block);
+void moveBlock(int col, int row, Block *block);
 
 #endif

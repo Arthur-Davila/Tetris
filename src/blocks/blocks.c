@@ -1,5 +1,6 @@
 #include "blocks.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int cellsize = 30;
 int rotatioState = 0;
@@ -277,6 +278,18 @@ Block createBlockS(void) {
 
     return s;
 }
+
+// *** CORREÇÃO: Removendo a multiplicação pelos globais offsetCol/offsetRow ***
+void moveBlock(int col, int row, Block *block) {
+    block->offsetCol += col;
+    block->offsetRow += row;
+    for (int i = 0; i < 4; i++){
+        block->pos[rotatioState][i].x += block->offsetCol;
+        block->pos[rotatioState][i].y += block->offsetRow;
+    }
+    
+}   
+
 void Draw(Block block) {
     for (int i = 0; i < 4; i++) {
         DrawRectangle(
@@ -288,5 +301,3 @@ void Draw(Block block) {
         );
     }
 }
-
-

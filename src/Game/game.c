@@ -11,6 +11,8 @@ void initGame(Game *game) {
     // Inicializa a lista de blocos disponíveis e pega os dois primeiros
     game->nextBlocks = getBlocks();
     game->currentBlock = getRandomBlock(&game->nextBlocks);
+    moveBlock(3,5, &game->currentBlock); // Posiciona o bloco inicial no centro superior
+    printf("Bloco atual posicionado em: (%d, %d)\n", game->currentBlock.pos[0][2].x, game->currentBlock.pos[0][2].y);
     game->nextBlock = getRandomBlock(&game->nextBlocks);
 }
 
@@ -46,8 +48,6 @@ BlockNode* getBlocks(void) {
     };
 
     for (int i = 0; i < 7; i++) {
-        printf("%d,",all[i].pos[0][0].x); // Debug
-        printf("%d \n",all[i].pos[0][0].y); // Debug
         BlockNode *n = create_node(all[i]);
         if (!head) head = n;
         else aux->next = n;
