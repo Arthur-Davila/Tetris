@@ -44,4 +44,9 @@ bool outSide( Block *block,int posX, int posY) {
     return false;
 
 }
-
+bool isCellEmpty(int x, int y, Grid *grid) {
+    if (y < 0 || y >= LINHAS || x < 0 || x >= COLUNAS) {
+        return false; // Fora dos limites da grade
+    }
+    return grid->matriz[y][x] == 0; // Retorna true se a célula estiver vazia
+}

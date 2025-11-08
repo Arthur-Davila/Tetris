@@ -15,5 +15,5 @@ bool outSide(Block *block,int posX, int posY);
 void inicializarMatriz(Grid *grid);
 void imprimirMatriz(Grid *grid);
 void Desenhar(Grid *grid);
-
+bool isCellEmpty(int x, int y, Grid *grid);
 #endif

@@ -27,7 +27,7 @@ int main(void) {
     while (!WindowShouldClose()) {
         handleInput(&game.currentBlock);
         if (eventTriggered(0.2)) {
-            moveBlockDown(&game.currentBlock);
+            moveBlockDown(&game);
         }
         BeginDrawing();
         ClearBackground(RAYWHITE);

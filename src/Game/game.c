@@ -35,8 +35,9 @@ BlockNode* create_node(Block block) {
 }
 
 BlockNode* getBlocks(void) {
-    BlockNode *head = NULL, *aux = NULL;
     
+    BlockNode *head = NULL, *aux = NULL;
+
     Block all[7] = {
         createBlockI(), createBlockJ(), createBlockL(),
         createBlockO(), createBlockS(), createBlockT(), createBlockZ()
@@ -86,25 +87,56 @@ Block getRandomBlock(BlockNode **head) {
     free(aux); // Libera o nó em si
     return chosen;
 }
+
+void lockBlockToGrid(Game *game) {
+    Block *block = &game->currentBlock;
+    for (int i = 0; i < 4; i++) {
+        int x = block->pos[rotatioState][i].x ;
+        int y = block->pos[rotatioState][i].y ;
+        if (y >= 0 && y < LINHAS && x >= 0 && x < COLUNAS) {
+            game->grid.matriz[y][x] = block->id; // +1 para evitar o 0 (vazio)
+        }
+    }
+    // Atualiza o bloco atual e o próximo
+    game->currentBlock = game->nextBlock;
+    game->nextBlock = getRandomBlock(&game->nextBlocks); 
+}
+
 void moveBlockLeft(Block *block) {
     if (outSide(block,-1,0)!= true) {
     moveBlock(-1, 0, block);
-    }
-    
-    
-    
+    }    
 }
+
 void moveBlockRight(Block *block) {
      if (outSide(block,1,0)!= true) {
     moveBlock(1, 0, block);
     }
     
 }
-void moveBlockDown(Block *block) {
-    if (outSide(block,0,1)!= true) {
-    moveBlock(0, 1, block);
+bool blockFits(Game *game)
+{
+    Block *block = &game->currentBlock;
+    for (int i = 0; i < 4; i++) {
+        int x = block->pos[rotatioState][i].x;
+        int y = block->pos[rotatioState][i].y+1;
+        if (!isCellEmpty(x, y, &game->grid)) {
+            return false;
+        }
     }
+    return true;    
 }
+
+void moveBlockDown(Game *game) {
+    if (outSide(&game->currentBlock,0,1)!= true && blockFits(game)== true) {
+    moveBlock(0, 1, &game->currentBlock);
+    }
+    else{ 
+        lockBlockToGrid(game);
+     }
+}
+
+
 
 void rotateBlock(Block *block) {
     rotate();
@@ -123,11 +155,14 @@ void handleInput(Block *block) {
         moveBlockLeft(block);
     }
     if (IsKeyPressed(KEY_DOWN)) {
-        moveBlockDown(block);
+    /*     moveBlockDown(block);
+     */
     }
     if (IsKeyPressed(KEY_UP))
     {
+
         rotateBlock(block);
+    
     }
     
 }

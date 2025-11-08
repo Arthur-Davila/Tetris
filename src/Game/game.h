@@ -25,5 +25,8 @@ Block getRandomBlock(BlockNode **head);
 void handleInput(Block *block); // Protótipo para função de entrada do jogador
 void moveBlockLeft(Block *block); // Protótipo para mover bloco para a esquerda
 void moveBlockRight(Block *block); // Protótipo para mover bloco para a direita
-void moveBlockDown(Block *block); // Protótipo para mover bloco para baixo
+void moveBlockDown(Game *game); // Protótipo para mover bloco para baixo
+bool blockFits(Game *game); // Protótipo para verificar se o bloco cabe na grade
+void rotateBlock(Block *block); // Protótipo para rotacionar o bloco
+void lockBlockToGrid(Game *game); // Protótipo para travar o bloco na grade
 #endif
