@@ -301,8 +301,8 @@ void moveBlock(int col, int row, Block *block) {
 void Draw(Block block) {
     for (int i = 0; i < 4; i++) {
         DrawRectangle(
-            block.pos[rotatioState][i].x * (cellsize + 1),
-            block.pos[rotatioState][i].y * (cellsize + 1),
+            block.pos[rotatioState][i].x * (cellsize)+11,
+            block.pos[rotatioState][i].y * (cellsize )+11,
             cellsize - 1,
             cellsize - 1,
             block.color

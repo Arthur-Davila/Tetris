@@ -21,7 +21,7 @@ int main(void) {
     Game game;
     initGame(&game);
     SetWindowTitle("Tetris Game");
-    InitWindow(300, 620, "Raylib no Arch Linux");
+    InitWindow(500, 620, "Raylib no Arch Linux");
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
@@ -30,7 +30,7 @@ int main(void) {
             moveBlockDown(&game);
         }
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(DARKBLUE);
         DrawGame(&game);
         if (game.gameOver) {
             Color semiBlack = { 0, 0, 0, 128 }; // 128 = 50% de opacidade

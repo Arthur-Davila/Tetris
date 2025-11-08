@@ -24,7 +24,7 @@ void Desenhar(Grid *grid) {
     for (int i = 0; i < LINHAS; i++) {
         for (int j = 0; j < COLUNAS; j++) {
             int valueCell = grid->matriz[i][j];
-            DrawRectangle(j * (CELLSIZE + 1), i * (CELLSIZE + 1),
+            DrawRectangle(j * (CELLSIZE)+11, i * (CELLSIZE )+11,
                           CELLSIZE - 1, CELLSIZE - 1, colors[valueCell]);
         }
     }
