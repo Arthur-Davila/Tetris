@@ -25,7 +25,7 @@ int main(void) {
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
-        handleInput(&game.currentBlock);
+        handleInput(&game);
         if (eventTriggered(0.2)) {
             moveBlockDown(&game);
         }

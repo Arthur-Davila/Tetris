@@ -147,21 +147,21 @@ void rotateBlock(Block *block) {
     }
     
 }
-void handleInput(Block *block) {
+void handleInput(Game *game) {
     if (IsKeyPressed(KEY_RIGHT)) {
-        moveBlockRight(block);
+        moveBlockRight(&game->currentBlock);
     }
     if (IsKeyPressed(KEY_LEFT)) {
-        moveBlockLeft(block);
+        moveBlockLeft(&game->currentBlock);
     }
     if (IsKeyPressed(KEY_DOWN)) {
-    /*     moveBlockDown(block);
-     */
+        moveBlockDown(game);
+    
     }
     if (IsKeyPressed(KEY_UP))
     {
 
-        rotateBlock(block);
+        rotateBlock(&game->currentBlock);
     
     }
     
