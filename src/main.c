@@ -32,6 +32,11 @@ int main(void) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         DrawGame(&game);
+        if (game.gameOver) {
+            Color semiBlack = { 0, 0, 0, 128 }; // 128 = 50% de opacidade
+            DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), semiBlack);
+            DrawText("Game Over!", 50, 300, 40, RED);
+        }
         EndDrawing();
     }
 

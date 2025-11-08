@@ -16,4 +16,8 @@ void inicializarMatriz(Grid *grid);
 void imprimirMatriz(Grid *grid);
 void Desenhar(Grid *grid);
 bool isCellEmpty(int x, int y, Grid *grid);
+bool isRowFull(Grid *grid, int row);
+void clearRow(Grid *grid, int row);
+void shiftRowsDown(Grid *grid, int row, int numRows);
+int clearFullRows(Grid *grid);
 #endif

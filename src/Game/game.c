@@ -5,13 +5,14 @@
 #include <time.h>
 
 void initGame(Game *game) {
-    
+    game->gameOver = false;
     srand(time(NULL));    
     // A função 'inicializarMatriz' está definida em grid.c
     inicializarMatriz(&game->grid);
     // Inicializa a lista de blocos disponíveis e pega os dois primeiros
     game->nextBlocks = getBlocks();
     game->currentBlock = getRandomBlock(&game->nextBlocks);
+    moveBlock(3, 0, &game->currentBlock); // Posiciona o bloco inicial no topo central
     game->nextBlock = getRandomBlock(&game->nextBlocks);
 }
 
@@ -99,69 +100,88 @@ void lockBlockToGrid(Game *game) {
     }
     // Atualiza o bloco atual e o próximo
     game->currentBlock = game->nextBlock;
-    game->nextBlock = getRandomBlock(&game->nextBlocks); 
-}
-
-void moveBlockLeft(Block *block) {
-    if (outSide(block,-1,0)!= true) {
-    moveBlock(-1, 0, block);
-    }    
-}
-
-void moveBlockRight(Block *block) {
-     if (outSide(block,1,0)!= true) {
-    moveBlock(1, 0, block);
+    if(blockFits(game,3,0)== false){
+        game->gameOver = true;
     }
-    
+    moveBlock(3, 0, &game->currentBlock); // Posiciona o novo bloco atual no topo central
+    game->nextBlock = getRandomBlock(&game->nextBlocks); 
+    clearFullRows(&game->grid);
 }
-bool blockFits(Game *game)
+bool blockFits(Game *game,int posX, int posY)
 {
     Block *block = &game->currentBlock;
     for (int i = 0; i < 4; i++) {
-        int x = block->pos[rotatioState][i].x;
-        int y = block->pos[rotatioState][i].y+1;
+        int x = block->pos[rotatioState][i].x + posX;
+        int y = block->pos[rotatioState][i].y + posY;
         if (!isCellEmpty(x, y, &game->grid)) {
             return false;
         }
     }
     return true;    
 }
+void moveBlockLeft(Game *game) {
+    if(game->gameOver != true){
+    if (outSide(&game->currentBlock,-1,0)!= true  && blockFits(game,-1,0)== true) {
+    moveBlock(-1, 0, &game->currentBlock);
+    }   
+}
+}
+
+void moveBlockRight(Game *game) {
+    if(game->gameOver != true){
+    
+    
+    if (outSide(&game->currentBlock,1,0)!= true && blockFits(game,1,0)== true) {
+    moveBlock(1, 0, &game->currentBlock);
+    }
+}
+    
+}
+
 
 void moveBlockDown(Game *game) {
-    if (outSide(&game->currentBlock,0,1)!= true && blockFits(game)== true) {
+    if(game->gameOver != true){
+    if (outSide(&game->currentBlock,0,1)!= true && blockFits(game,0,1)== true) {
     moveBlock(0, 1, &game->currentBlock);
     }
     else{ 
         lockBlockToGrid(game);
      }
+    }
 }
 
 
 
-void rotateBlock(Block *block) {
-    rotate();
-    
-    if (outSide(block,0,0)== true) {
-        undoRotate();
-    
+void rotateBlock(Game *game) {
+    if(game->gameOver != true){
+    rotate(&game->currentBlock);
+
+    if (outSide(&game->currentBlock,0,0)== true || blockFits(game,0,0)== false) {
+        undoRotate(&game->currentBlock);
+
     }
+}
     
 }
 void handleInput(Game *game) {
+    if(game->gameOver == true && IsKeyPressed(KEY_ENTER)) {
+        initGame(game);
+        return;
+    }
     if (IsKeyPressed(KEY_RIGHT)) {
-        moveBlockRight(&game->currentBlock);
+        moveBlockRight(game);
     }
     if (IsKeyPressed(KEY_LEFT)) {
-        moveBlockLeft(&game->currentBlock);
+        moveBlockLeft(game);
     }
-    if (IsKeyPressed(KEY_DOWN)) {
+    if (IsKeyDown(KEY_DOWN)) {
         moveBlockDown(game);
     
     }
     if (IsKeyPressed(KEY_UP))
     {
 
-        rotateBlock(&game->currentBlock);
+        rotateBlock(game);
     
     }
     

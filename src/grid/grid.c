@@ -50,3 +50,43 @@ bool isCellEmpty(int x, int y, Grid *grid) {
     }
     return grid->matriz[y][x] == 0; // Retorna true se a célula estiver vazia
 }
+
+bool isRowFull(Grid *grid, int row)
+{
+    for (int j = 0; j < COLUNAS; j++) {
+        if (grid->matriz[row][j] == 0) {
+            return false; // Encontrou uma célula vazia, a linha não está cheia
+        }
+    }
+    return true; // Todas as células estão preenchidas
+}
+
+void clearRow(Grid *grid, int row)
+{
+    for (int j = 0; j < COLUNAS; j++) {
+        grid->matriz[row][j] = 0;
+    }
+}
+
+void shiftRowsDown(Grid *grid, int row,int rowNumber)
+{
+    for(int j = 0; j<COLUNAS;j++){
+        grid->matriz[row+rowNumber][j]=grid->matriz[row][j];
+        grid->matriz[row][j]=0;
+    }
+}
+
+int clearFullRows(Grid *grid)
+{   int completed = 0;
+    for (int i = LINHAS - 1; i >= 0; i--) {
+        if (isRowFull(grid, i)) {
+            clearRow(grid, i);
+            completed++;
+            
+        }
+        else if (completed > 0) {
+            shiftRowsDown(grid, i, completed); 
+        }
+    }
+    return completed;
+}

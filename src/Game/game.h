@@ -14,6 +14,7 @@ typedef struct {
     BlockNode *nextBlocks;   // lista encadeada de blocos disponíveis
     Block currentBlock;
     Block nextBlock;
+    bool gameOver;
 } Game;
 
 // Protótipos das funções
@@ -23,10 +24,10 @@ BlockNode* create_node(Block block);
 BlockNode* getBlocks(void);
 Block getRandomBlock(BlockNode **head);
 void handleInput(Game *game); // Protótipo para função de entrada do jogador
-void moveBlockLeft(Block *block); // Protótipo para mover bloco para a esquerda
-void moveBlockRight(Block *block); // Protótipo para mover bloco para a direita
+void moveBlockLeft(Game *game); // Protótipo para mover bloco para a esquerda
+void moveBlockRight(Game *game); // Protótipo para mover bloco para a direita
 void moveBlockDown(Game *game); // Protótipo para mover bloco para baixo
-bool blockFits(Game *game); // Protótipo para verificar se o bloco cabe na grade
-void rotateBlock(Block *block); // Protótipo para rotacionar o bloco
+bool blockFits(Game *game, int posX, int posY); // Protótipo para verificar se o bloco cabe na grade
+void rotateBlock(Game *game); // Protótipo para rotacionar o bloco
 void lockBlockToGrid(Game *game); // Protótipo para travar o bloco na grade
 #endif
