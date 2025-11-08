@@ -37,6 +37,9 @@ int main(void) {
             DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), semiBlack);
             DrawText("Game Over!", 50, 300, 40, RED);
         }
+        DrawText("Score", 345, 15,38, WHITE);
+        DrawRectangleRounded((Rectangle){320, 55, 170, 60}, 0.3, 6,(Color) { 100, 20, 30, 128 });
+        DrawText(TextFormat("%d", 0), 370, 75, 40, WHITE);
         EndDrawing();
     }
 
