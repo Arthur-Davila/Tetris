@@ -26,7 +26,7 @@ int main(void) {
 
     while (!WindowShouldClose()) {
         handleInput(&game);
-        if (eventTriggered(0.2)) {
+        if (eventTriggered(0.3)) {
             moveBlockDown(&game);
         }
         BeginDrawing();
