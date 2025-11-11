@@ -41,7 +41,7 @@ int main(void) {
         DrawText("Next", 360, 175,38, WHITE);
         DrawRectangleRounded((Rectangle){320, 55, 170, 60}, 0.3, 6,(Color) { 100, 20, 30, 128 });
         DrawRectangleRounded((Rectangle){320, 215, 170, 180}, 0.3, 6,(Color) { 100, 20, 30, 128 });
-        DrawText(TextFormat("%d", 0), 370, 75, 40, WHITE);
+        DrawText(TextFormat("%d", game.score), 395, 65, 40, WHITE);
         
         EndDrawing();
     }

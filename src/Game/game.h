@@ -15,6 +15,7 @@ typedef struct {
     Block currentBlock;
     Block nextBlock;
     bool gameOver;
+    int score ;
 } Game;
 
 // Protótipos das funções

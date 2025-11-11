@@ -3,7 +3,20 @@
 #include <stdlib.h>
 #include <stdio.h> // Para fprintf (bom para debug)
 #include <time.h>
-
+void updateScore(Game *game, int rowsCleared,int softDropLines) {
+    int points = 0;
+    switch (rowsCleared) {
+        case 1: points = 100; break;
+        case 2: points = 300; break;
+        case 3: points = 500; break;
+        case 4: points = 800; break;
+        default: points = 0; break;
+    }
+    points += softDropLines * 1; // 1 ponto por linha de soft drop
+    game->score += points;
+    // Atualiza a exibição da pontuação, se necessário
+    // Por exemplo, você pode armazenar a pontuação no struct Game e desenhá-la na tela
+}
 void initGame(Game *game) {
     game->gameOver = false;
     srand(time(NULL));    
@@ -14,6 +27,10 @@ void initGame(Game *game) {
     game->currentBlock = getRandomBlock(&game->nextBlocks);
     moveBlock(3, 0, &game->currentBlock); // Posiciona o bloco inicial no topo central
     game->nextBlock = getRandomBlock(&game->nextBlocks);
+    game->score = 0;
+    int rowsCleared = clearFullRows(&game->grid);
+    updateScore(game, rowsCleared,1);
+
 }
 
 void DrawGame(Game *game) {
@@ -105,7 +122,8 @@ void lockBlockToGrid(Game *game) {
     }
     moveBlock(3, 0, &game->currentBlock); // Posiciona o novo bloco atual no topo central
     game->nextBlock = getRandomBlock(&game->nextBlocks); 
-    clearFullRows(&game->grid);
+    int rowsCleared = clearFullRows(&game->grid);
+    updateScore(game, rowsCleared,0);
 }
 bool blockFits(Game *game,int posX, int posY)
 {
@@ -175,6 +193,7 @@ void handleInput(Game *game) {
         moveBlockLeft(game);
     }
     if (IsKeyDown(KEY_DOWN)) {
+        updateScore(game,0,1);
         moveBlockDown(game);
     
     }
