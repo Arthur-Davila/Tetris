@@ -45,6 +45,7 @@ Block createBlockL(void) {
 
     return l;
 }
+
 Block createBlockT(void) {
     Block t;
     t.id = 2;
@@ -279,13 +280,16 @@ Block createBlockS(void) {
 
     return s;
 }
-void rotate() {
+void rotate(Block *block) {
+    block->offsetCol = 0;
+    block->offsetRow = 0;
     rotatioState = (rotatioState + 1) % 4;
 }
-void undoRotate() {
-    rotatioState = (rotatioState + 3 ) % 4 ;
+
+void undoRotate(Block *block) {
+    rotatioState = (rotatioState + 3) % 4;
 }
-// *** CORREÇÃO: Removendo a multiplicação pelos globais offsetCol/offsetRow ***
+
 void moveBlock(int col, int row, Block *block) {
     block->offsetCol = col;
     block->offsetRow = row;

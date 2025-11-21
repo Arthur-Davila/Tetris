@@ -8,6 +8,13 @@ typedef struct BlockNode {
     struct BlockNode *next;
 } BlockNode;
 
+typedef enum {
+    MENU,
+    GAME,
+    CREDITS,
+    GAMEOVER
+} GameState;
+
 // 2. Estado do jogo (Pode agora usar BlockNode)
 typedef struct {
     Grid grid;
@@ -16,6 +23,8 @@ typedef struct {
     Block nextBlock;
     bool gameOver;
     int score ;
+    GameState state;
+    int menuOption;
 } Game;
 
 // Protótipos das funções

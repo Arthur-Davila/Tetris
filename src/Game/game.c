@@ -1,8 +1,9 @@
 #include "game.h"
 #include "raylib.h"
 #include <stdlib.h>
-#include <stdio.h> // Para fprintf (bom para debug)
+#include <stdio.h>
 #include <time.h>
+
 void updateScore(Game *game, int rowsCleared,int softDropLines) {
     int points = 0;
     switch (rowsCleared) {
@@ -12,13 +13,15 @@ void updateScore(Game *game, int rowsCleared,int softDropLines) {
         case 4: points = 800; break;
         default: points = 0; break;
     }
-    points += softDropLines * 1; // 1 ponto por linha de soft drop
+    points += softDropLines * 1;
     game->score += points;
-    // Atualiza a exibição da pontuação, se necessário
-    // Por exemplo, você pode armazenar a pontuação no struct Game e desenhá-la na tela
 }
+
 void initGame(Game *game) {
     game->gameOver = false;
+    game->state = MENU;
+    game->score = 0;
+    game->menuOption = 0;
     srand(time(NULL));    
     // A função 'inicializarMatriz' está definida em grid.c
     inicializarMatriz(&game->grid);
@@ -182,6 +185,8 @@ void rotateBlock(Game *game) {
     
 }
 void handleInput(Game *game) {
+    if (game->state != GAME) return;
+    
     if(game->gameOver == true && IsKeyPressed(KEY_ENTER)) {
         initGame(game);
         return;

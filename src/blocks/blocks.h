@@ -13,7 +13,7 @@ typedef struct {
 
 typedef struct {
     Color color;
-    Pos* pos[4]; // 4 rotações, cada uma com 4 posições
+    Pos* pos[4];
     int id;
     int offsetCol;
     int offsetRow;
@@ -29,7 +29,7 @@ Block createBlockZ(void);
 Block createBlockI(void);
 void Draw(Block block);
 void moveBlock(int col, int row, Block *block);
-void rotate();
-void undoRotate();
+void rotate(Block *block);
+void undoRotate(Block *block);
 
 #endif
