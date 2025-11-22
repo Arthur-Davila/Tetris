@@ -313,3 +313,52 @@ void Draw(Block block) {
         );
     }
 }
+
+void DrawBlockInPanel(Block block, int panelX, int panelY, int panelWidth, int panelHeight) {
+    int centerX = panelX + panelWidth / 2;
+    int centerY = panelY + panelHeight / 2;
+    
+    int offsetX = centerX - (cellsize * 2); 
+    int offsetY = centerY - (cellsize * 2);
+    
+    switch (block.id) {
+        case 1: // L
+            offsetX += cellsize / 2;
+            offsetY += cellsize / 2;
+            break;
+        case 2: // T
+            offsetX += cellsize / 2;
+            offsetY += cellsize / 2;
+            break;
+        case 3: // Z
+            offsetX += cellsize / 2;
+            offsetY += cellsize / 2;
+            break;
+        case 4: // J
+            offsetX += cellsize / 2;
+            offsetY += cellsize / 2;
+            break;
+        case 5: // I
+            offsetX += cellsize / 2;
+            offsetY += cellsize;
+            break;
+        case 6: // O
+            offsetX += cellsize;
+            offsetY += cellsize;
+            break;
+        case 7: // S
+            offsetX += cellsize / 2;
+            offsetY += cellsize / 2;
+            break;
+    }
+    
+    for (int i = 0; i < 4; i++) {
+        DrawRectangle(
+            block.pos[0][i].x * cellsize + offsetX,
+            block.pos[0][i].y * cellsize + offsetY,
+            cellsize - 1,
+            cellsize - 1,
+            block.color
+        );
+    }
+}

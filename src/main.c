@@ -37,14 +37,23 @@ int main(void) {
                 break;
             case GAME:
                 handleInput(&game);
-                if (eventTriggered(0.3)) moveBlockDown(&game);
-                DrawGame(&game); // Aqui deve desenhar o painel lateral
+
+                if (eventTriggered(0.3)) {
+                    moveBlockDown(&game);
+                }
+
+                DrawGame(&game);
                 DrawText("Score", 345, 15, 38, WHITE);
                 DrawText("Next", 360, 175, 38, WHITE);
                 DrawRectangleRounded((Rectangle){320, 55, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
                 DrawRectangleRounded((Rectangle){320, 215, 170, 180}, 0.3, 6, (Color){100, 20, 30, 128});
                 DrawText(TextFormat("%d", game.score), 395, 65, 40, WHITE);
-                if (game.gameOver) game.state = GAMEOVER;
+                DrawBlockInPanel(game.nextBlock, 320, 215, 170, 180);
+
+                if (game.gameOver) {
+                    game.state = GAMEOVER;
+                }
+
                 break;
 
             case CREDITS:

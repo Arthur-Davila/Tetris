@@ -28,6 +28,7 @@ Block createBlockS(void);
 Block createBlockZ(void);
 Block createBlockI(void);
 void Draw(Block block);
+void DrawBlockInPanel(Block block, int panelX, int panelY, int panelWidth, int panelHeight);
 void moveBlock(int col, int row, Block *block);
 void rotate(Block *block);
 void undoRotate(Block *block);
