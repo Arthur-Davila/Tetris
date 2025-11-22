@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
 void updateScore(Game *game, int rowsCleared,int softDropLines) {
@@ -23,27 +24,26 @@ void initGame(Game *game) {
     game->score = 0;
     game->menuOption = 0;
     game->startTime = 0;
-
+    game->finalTime = 0;
+    game->nameLength = 0;
+    strcpy(game->playerName, "Player");
+    
     srand(time(NULL));    
     inicializarMatriz(&game->grid);
-    // Inicializa a lista de blocos disponíveis e pega os dois primeiros
     game->nextBlocks = getBlocks();
     game->currentBlock = getRandomBlock(&game->nextBlocks);
-    moveBlock(3, 0, &game->currentBlock); // Posiciona o bloco inicial no topo central
+    moveBlock(3, 0, &game->currentBlock);
     game->nextBlock = getRandomBlock(&game->nextBlocks);
-    game->score = 0;
     int rowsCleared = clearFullRows(&game->grid);
-    updateScore(game, rowsCleared,1);
-
+    updateScore(game, rowsCleared, 1);
+    
+    loadLeaderboard(&game->leaderboard);
 }
 
 void DrawGame(Game *game) {
     Desenhar(&game->grid); // Debug: Verifica a posição do bloco atual
     Draw(game->currentBlock); 
-    // TODO: Adicionar desenho do nextBlock
 }
-
-// --- Funções de Lista de Blocos ---
 
 BlockNode* create_node(Block block) {
     BlockNode *node = malloc(sizeof(BlockNode));
@@ -90,10 +90,9 @@ Block getRandomBlock(BlockNode **head) {
     int idx = rand() % size;
     aux = *head;
 
-    // Percorre até o índice
     for (int i = 0; i < idx; i++) {
-        prev = aux;/* 
-        printf("ID do bloco: %d\n", aux->block.id); */
+        prev = aux;
+        // printf("ID do bloco: %d\n", aux->block.id);
         aux = aux->next;
     }
 
@@ -106,30 +105,42 @@ Block getRandomBlock(BlockNode **head) {
     
    
 
-    free(aux); // Libera o nó em si
+    free(aux);
     return chosen;
 }
 
 void lockBlockToGrid(Game *game) {
     Block *block = &game->currentBlock;
     for (int i = 0; i < 4; i++) {
-        int x = block->pos[rotatioState][i].x ;
-        int y = block->pos[rotatioState][i].y ;
+        int x = block->pos[rotatioState][i].x;
+        int y = block->pos[rotatioState][i].y;
         if (y >= 0 && y < LINHAS && x >= 0 && x < COLUNAS) {
-            game->grid.matriz[y][x] = block->id; // +1 para evitar o 0 (vazio)
+            game->grid.matriz[y][x] = block->id;
         }
     }
-    // Atualiza o bloco atual e o próximo
+    
     game->currentBlock = game->nextBlock;
-    if(blockFits(game,3,0)== false){
+    
+    if(blockFits(game, 3, 0) == false) {
         game->gameOver = true;
         game->finalTime = GetTime() - game->startTime;
+        
+        if (isHighScore(&game->leaderboard, game->score)) {
+            game->state = ENTER_NAME;
+            game->nameLength = 0;
+            strcpy(game->playerName, "");
+        } else {
+            game->state = GAMEOVER;
+        }
+        return;
     }
-    moveBlock(3, 0, &game->currentBlock); // Posiciona o novo bloco atual no topo central
-    game->nextBlock = getRandomBlock(&game->nextBlocks); 
+    
+    moveBlock(3, 0, &game->currentBlock);
+    game->nextBlock = getRandomBlock(&game->nextBlocks);
     int rowsCleared = clearFullRows(&game->grid);
-    updateScore(game, rowsCleared,0);
+    updateScore(game, rowsCleared, 0);
 }
+
 bool blockFits(Game *game,int posX, int posY)
 {
     Block *block = &game->currentBlock;

@@ -59,10 +59,13 @@ int main(void) {
                 DrawText("Score", 345, 375, 38, WHITE);
                 DrawRectangleRounded((Rectangle){320, 415, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
                 DrawText(TextFormat("%d", game.score), 370, 430, 40, WHITE);
-                
-                if (game.gameOver) game.state = GAMEOVER;
                 break;
-
+            case LEADERBOARD:
+                DrawLeaderboard(&game);
+                break;
+            case ENTER_NAME:
+                DrawEnterName(&game);
+                break;
             case CREDITS:
                 DrawCredits(&game);
                 break;

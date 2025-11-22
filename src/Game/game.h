@@ -3,6 +3,8 @@
 
 #include "../grid/grid.h"
 #include "../blocks/blocks.h" 
+#include "../Leaderboard/leaderboard.h"
+
 typedef struct BlockNode {
     Block block;
     struct BlockNode *next;
@@ -12,10 +14,11 @@ typedef enum {
     MENU,
     GAME,
     CREDITS,
-    GAMEOVER
+    GAMEOVER,
+    LEADERBOARD,  
+    ENTER_NAME
 } GameState;
 
-// 2. Estado do jogo (Pode agora usar BlockNode)
 typedef struct {
     Grid grid;
     BlockNode *nextBlocks;   // lista encadeada de blocos disponíveis
@@ -27,6 +30,9 @@ typedef struct {
     int menuOption;
     double startTime;
     double finalTime;
+    Leaderboard leaderboard;
+    char playerName[NAME_LENGTH]; 
+    int nameLength;
 } Game;
 
 // Protótipos das funções
