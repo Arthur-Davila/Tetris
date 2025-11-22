@@ -33,12 +33,18 @@ void DrawCredits(Game *game) {
 void DrawGameOver(Game *game) {
     if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN)) game->menuOption = 1 - game->menuOption;
 
-    DrawText("Game Over!", 100, 140, 48, RED);
+    int minutes = (int)(game->finalTime / 60);
+    int seconds = (int)game->finalTime % 60;
 
-    DrawRectangle(100, 250, 300, 50, game->menuOption == 0 ? LIGHTGRAY : BLUE);
-    DrawText("Tentar Novamente", 121, 264, 32, WHITE);
-    DrawRectangle(100, 320, 300, 50, game->menuOption == 1 ? LIGHTGRAY : BLUE);
-    DrawText("Sair", 220, 334, 32, WHITE);
+    DrawText("Game Over!", 130, 100, 48, RED);
+    DrawText(TextFormat("Score: %d", game->score), 170, 170, 30, WHITE);
+    DrawText(TextFormat("Time: %02d:%02d", minutes, seconds), 170, 210, 30, WHITE);
+
+    DrawRectangle(100, 280, 300, 50, game->menuOption == 0 ? LIGHTGRAY : BLUE);
+    DrawText("Tentar Novamente", 115, 294, 28, WHITE); 
+    
+    DrawRectangle(100, 350, 300, 50, game->menuOption == 1 ? LIGHTGRAY : BLUE);
+    DrawText("Sair", 220, 364, 32, WHITE);
 
     if (IsKeyPressed(KEY_ENTER)) {
         if (game->menuOption == 0) {

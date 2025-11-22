@@ -25,6 +25,8 @@ typedef struct {
     int score ;
     GameState state;
     int menuOption;
+    double startTime;
+    double finalTime;
 } Game;
 
 // Protótipos das funções

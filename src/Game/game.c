@@ -22,8 +22,9 @@ void initGame(Game *game) {
     game->state = MENU;
     game->score = 0;
     game->menuOption = 0;
+    game->startTime = 0;
+
     srand(time(NULL));    
-    // A função 'inicializarMatriz' está definida em grid.c
     inicializarMatriz(&game->grid);
     // Inicializa a lista de blocos disponíveis e pega os dois primeiros
     game->nextBlocks = getBlocks();
@@ -122,6 +123,7 @@ void lockBlockToGrid(Game *game) {
     game->currentBlock = game->nextBlock;
     if(blockFits(game,3,0)== false){
         game->gameOver = true;
+        game->finalTime = GetTime() - game->startTime;
     }
     moveBlock(3, 0, &game->currentBlock); // Posiciona o novo bloco atual no topo central
     game->nextBlock = getRandomBlock(&game->nextBlocks); 

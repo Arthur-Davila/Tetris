@@ -23,7 +23,7 @@ int main(void) {
     Game game;
     initGame(&game);
 
-    InitWindow(500, 620, "Raylib no Arch Linux");
+    InitWindow(500, 620, "Tetris");
     SetExitKey(KEY_NULL);
     SetTargetFPS(60);
 
@@ -36,24 +36,31 @@ int main(void) {
                 DrawMenu(&game);
                 break;
             case GAME:
+                if (game.startTime == 0) {
+                    game.startTime = GetTime();
+                }
+                
                 handleInput(&game);
-
-                if (eventTriggered(0.3)) {
-                    moveBlockDown(&game);
-                }
-
+                if (eventTriggered(0.3)) moveBlockDown(&game);
                 DrawGame(&game);
-                DrawText("Score", 345, 15, 38, WHITE);
-                DrawText("Next", 360, 175, 38, WHITE);
-                DrawRectangleRounded((Rectangle){320, 55, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
-                DrawRectangleRounded((Rectangle){320, 215, 170, 180}, 0.3, 6, (Color){100, 20, 30, 128});
-                DrawText(TextFormat("%d", game.score), 395, 65, 40, WHITE);
-                DrawBlockInPanel(game.nextBlock, 320, 215, 170, 180);
-
-                if (game.gameOver) {
-                    game.state = GAMEOVER;
-                }
-
+                
+                double elapsedTime = GetTime() - game.startTime;
+                int minutes = (int)(elapsedTime / 60);
+                int seconds = (int)elapsedTime % 60;
+                
+                DrawText("Next", 360, 15, 38, WHITE);
+                DrawRectangleRounded((Rectangle){320, 55, 170, 180}, 0.3, 6, (Color){100, 20, 30, 128});
+                DrawBlockInPanel(game.nextBlock, 320, 55, 170, 180);
+                
+                DrawText("Time", 360, 255, 38, WHITE);
+                DrawRectangleRounded((Rectangle){320, 295, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
+                DrawText(TextFormat("%02d:%02d", minutes, seconds), 345, 310, 35, WHITE);
+                
+                DrawText("Score", 345, 375, 38, WHITE);
+                DrawRectangleRounded((Rectangle){320, 415, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
+                DrawText(TextFormat("%d", game.score), 370, 430, 40, WHITE);
+                
+                if (game.gameOver) game.state = GAMEOVER;
                 break;
 
             case CREDITS:
