@@ -5,7 +5,43 @@
 #include <string.h>
 #include <time.h>
 
-void updateScore(Game *game, int rowsCleared,int softDropLines) {
+int linesClearedToLevelUp = 5;  
+
+double getDropSpeed(int level) {
+    switch(level) {
+        case 1: 
+            return 0.8;   
+        case 2: 
+            return 0.4;  
+        case 3: 
+            return 0.2;  
+        default: 
+            return 0.2; 
+    }
+}
+
+const char* getLevelName(int level) {
+    switch(level) {
+        case 1: return "Facil";
+        case 2: return "Medio";
+        case 3: return "Dificil";
+        default: return "MAX";
+    }
+}
+
+void updateLevel(Game *game) {
+    int newLevel = (game->linesCleared / linesClearedToLevelUp) + 1;
+    
+    if (newLevel > 3) {
+        newLevel = 3;
+    }
+    
+    if (newLevel > game->level) {
+        game->level = newLevel;
+    }
+}
+
+void updateScore(Game *game, int rowsCleared, int softDropLines) {
     int points = 0;
     switch (rowsCleared) {
         case 1: points = 100; break;
@@ -14,8 +50,14 @@ void updateScore(Game *game, int rowsCleared,int softDropLines) {
         case 4: points = 800; break;
         default: points = 0; break;
     }
+    
+    points *= game->level;
+    
     points += softDropLines * 1;
     game->score += points;
+    
+    game->linesCleared += rowsCleared;
+    updateLevel(game);
 }
 
 void initGame(Game *game) {
@@ -26,6 +68,8 @@ void initGame(Game *game) {
     game->startTime = 0;
     game->finalTime = 0;
     game->nameLength = 0;
+    game->level = 1;        
+    game->linesCleared = 0;
     strcpy(game->playerName, "Player");
     
     srand(time(NULL));    

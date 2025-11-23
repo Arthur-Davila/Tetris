@@ -41,7 +41,13 @@ int main(void) {
                 }
                 
                 handleInput(&game);
-                if (eventTriggered(0.3)) moveBlockDown(&game);
+
+                double dropSpeed = getDropSpeed(game.level);
+
+                if (eventTriggered(dropSpeed)){
+                    moveBlockDown(&game);
+                }
+
                 DrawGame(&game);
                 
                 double elapsedTime = GetTime() - game.startTime;
@@ -54,11 +60,16 @@ int main(void) {
                 
                 DrawText("Time", 360, 255, 38, WHITE);
                 DrawRectangleRounded((Rectangle){320, 295, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
-                DrawText(TextFormat("%02d:%02d", minutes, seconds), 345, 310, 35, WHITE);
+                DrawText(TextFormat("%02d:%02d", minutes, seconds), 360, 310, 35, WHITE);
                 
-                DrawText("Score", 345, 375, 38, WHITE);
+                DrawText("Score", 350, 375, 38, WHITE);
                 DrawRectangleRounded((Rectangle){320, 415, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
-                DrawText(TextFormat("%d", game.score), 370, 430, 40, WHITE);
+                DrawText(TextFormat("%d", game.score), 395, 430, 40, WHITE);
+
+                DrawText("Level", 350, 495, 38, WHITE);
+                DrawRectangleRounded((Rectangle){320, 535, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
+                DrawText(TextFormat("%d - %s", game.level, getLevelName(game.level)), 345, 550, 30, WHITE);
+
                 break;
             case LEADERBOARD:
                 DrawLeaderboard(&game);
