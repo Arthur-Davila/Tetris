@@ -39,6 +39,7 @@ typedef struct {
 
 void initGame(Game *game);
 void DrawGame(Game *game);
+void DrawHUD(Game *game);
 BlockNode* create_node(Block block);
 BlockNode* getBlocks(void);
 Block getRandomBlock(BlockNode **head);

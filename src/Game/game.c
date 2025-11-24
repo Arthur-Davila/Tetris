@@ -22,10 +22,14 @@ double getDropSpeed(int level) {
 
 const char* getLevelName(int level) {
     switch(level) {
-        case 1: return "Facil";
-        case 2: return "Medio";
-        case 3: return "Dificil";
-        default: return "MAX";
+        case 1: 
+            return "Facil";
+        case 2: 
+            return "Medio";
+        case 3: 
+            return "Dificil";
+        default: 
+            return "MAX";
     }
 }
 
@@ -44,11 +48,21 @@ void updateLevel(Game *game) {
 void updateScore(Game *game, int rowsCleared, int softDropLines) {
     int points = 0;
     switch (rowsCleared) {
-        case 1: points = 100; break;
-        case 2: points = 300; break;
-        case 3: points = 500; break;
-        case 4: points = 800; break;
-        default: points = 0; break;
+        case 1: 
+            points = 100; 
+            break;
+        case 2: 
+            points = 300; 
+            break;
+        case 3:
+            points = 500; 
+            break;
+        case 4: 
+            points = 800; 
+            break;
+        default: 
+            points = 0; 
+            break;
     }
     
     points *= game->level;
@@ -84,9 +98,32 @@ void initGame(Game *game) {
     loadLeaderboard(&game->leaderboard);
 }
 
+void DrawHUD(Game *game) {
+    double elapsedTime = GetTime() - game->startTime;
+    int minutes = (int)(elapsedTime / 60);
+    int seconds = (int)elapsedTime % 60;
+    
+    DrawText("Next", 360, 15, 38, WHITE);
+    DrawRectangleRounded((Rectangle){320, 55, 170, 180}, 0.3, 6, (Color){100, 20, 30, 128});
+    DrawBlockInPanel(game->nextBlock, 320, 55, 170, 180);
+    
+    DrawText("Time", 360, 255, 38, WHITE);
+    DrawRectangleRounded((Rectangle){320, 295, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
+    DrawText(TextFormat("%02d:%02d", minutes, seconds), 360, 310, 35, WHITE);
+    
+    DrawText("Score", 350, 375, 38, WHITE);
+    DrawRectangleRounded((Rectangle){320, 415, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
+    DrawText(TextFormat("%d", game->score), 395, 430, 40, WHITE);
+    
+    DrawText("Level", 350, 495, 38, WHITE);
+    DrawRectangleRounded((Rectangle){320, 535, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
+    DrawText(TextFormat("%d - %s", game->level, getLevelName(game->level)), 345, 550, 30, WHITE);
+}
+
 void DrawGame(Game *game) {
-    Desenhar(&game->grid); // Debug: Verifica a posição do bloco atual
-    Draw(game->currentBlock); 
+    Desenhar(&game->grid);
+    Draw(game->currentBlock);
+    DrawHUD(game);
 }
 
 BlockNode* create_node(Block block) {
@@ -94,7 +131,7 @@ BlockNode* create_node(Block block) {
     if (node == NULL) {
         return NULL;
     }
-    // A struct Block é copiada por valor.
+
     node->block = block; 
     node->next = NULL;
     return node;
@@ -146,8 +183,6 @@ Block getRandomBlock(BlockNode **head) {
 
     // Copia o bloco escolhido (a nova cópia será o currentBlock/nextBlock)
     Block chosen = aux->block; 
-    
-   
 
     free(aux);
     return chosen;
