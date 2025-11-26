@@ -50,7 +50,7 @@ void DrawLeaderboard(Game *game) {
 }
 
 void DrawEnterName(Game *game) {
-    DrawText("Novo Recorde!", 90, 100, 48, YELLOW);  // Centralizado
+    DrawText("Novo Recorde!", 90, 100, 48, YELLOW);  // centralizei
     DrawText(TextFormat("Score: %d", game->score), 170, 180, 30, WHITE);
     DrawText("Digite seu nome:", 140, 250, 30, WHITE);
     
@@ -86,21 +86,35 @@ void DrawGameOver(Game *game) {
     if (IsKeyPressed(KEY_UP)) game->menuOption = (game->menuOption - 1 + 3) % 3;
     if (IsKeyPressed(KEY_DOWN)) game->menuOption = (game->menuOption + 1) % 3;
 
+    int sw = GetScreenWidth();
+    int sh = GetScreenHeight();
     int minutes = (int)(game->finalTime / 60);
     int seconds = (int)game->finalTime % 60;
 
-    DrawText("Game Over!", 130, 100, 48, RED);
-    DrawText(TextFormat("Score: %d", game->score), 170, 170, 30, WHITE);
-    DrawText(TextFormat("Time: %02d:%02d", minutes, seconds), 170, 210, 30, WHITE);
+    DrawRectangle(0, 0, sw, sh, Fade(BLACK, 0.5f));
 
-    DrawRectangle(100, 280, 300, 50, game->menuOption == 0 ? LIGHTGRAY : BLUE);
-    DrawText("Tentar Novamente", 125, 294, 28, WHITE);
-    
-    DrawRectangle(100, 350, 300, 50, game->menuOption == 1 ? LIGHTGRAY : BLUE);
-    DrawText("Menu", 215, 364, 32, WHITE);
-    
-    DrawRectangle(100, 420, 300, 50, game->menuOption == 2 ? LIGHTGRAY : BLUE);
-    DrawText("Sair", 220, 434, 32, WHITE);
+    const char *title = "GAME OVER";
+    int titleSize = 64;
+    int titleW = MeasureText(title, titleSize);
+    DrawText(title, sw / 2 - titleW / 2, sh / 2 - 120, titleSize, MAROON);
+
+    char info[64];
+    sprintf(info, "Score: %d    Time: %02d:%02d", game->score, minutes, seconds);
+    int infoW = MeasureText(info, 20);
+    DrawText(info, sw / 2 - infoW / 2, sh / 2 - 50, 20, LIGHTGRAY);
+
+    const char *labels[3] = {"Tentar Novamente", "Menu", "Sair"};
+    const int btnW = 240, btnH = 48;
+    int bx = sw / 2 - btnW / 2;
+    int by = sh / 2 - 10;
+
+    for (int i = 0; i < 3; i++) {
+        Rectangle b = { (float)bx, (float)(by + i * (btnH + 12)), (float)btnW, (float)btnH };
+        Color bg = (game->menuOption == i) ? LIGHTGRAY : DARKGRAY;
+        DrawRectangleRec(b, bg);
+        int lw = MeasureText(labels[i], 20);
+        DrawText(labels[i], bx + (btnW - lw) / 2, (int)(b.y + (btnH - 20) / 2), 20, WHITE);
+    }
 
     if (IsKeyPressed(KEY_ENTER)) {
         if (game->menuOption == 0) {
