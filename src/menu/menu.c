@@ -1,4 +1,5 @@
 #include "menu.h"
+#include <stdio.h>
 #include <raylib.h>
 
 void DrawMenu(Game *game) {
@@ -50,7 +51,7 @@ void DrawLeaderboard(Game *game) {
         DrawText(TextFormat("%02d:%02d", r->minutes, r->seconds), 360, 160 + i * 35, 25, WHITE);
     }
     
-    DrawText("Pressione ESC para voltar", 120, 550, 20, LIGHTGRAY);
+    DrawText("Press ESC to go back", 120, 550, 20, LIGHTGRAY);
     if (IsKeyPressed(KEY_ESCAPE)) game->state = MENU;
 }
 
@@ -62,7 +63,7 @@ void DrawEnterName(Game *game) {
     DrawRectangle(100, 300, 300, 50, DARKGRAY);
     DrawText(game->playerName, 120, 315, 30, WHITE);
     
-    DrawText("Pressione ENTER para confirmar", 90, 400, 20, LIGHTGRAY);
+    DrawText("Press ENTER to confirm", 130, 400, 20, LIGHTGRAY);
     
     int key = GetCharPressed();
     while (key > 0) {
@@ -125,6 +126,6 @@ void DrawCredits(Game *game) {
     DrawText("Arthur Davila", 120, 180, 30, WHITE);
     DrawText("Nathália Carvalho", 120, 230, 30, WHITE);
     DrawText("Maria Eduarda", 120, 280, 30, WHITE);
-    DrawText("Pressione ESC para voltar", 120, 370, 20, LIGHTGRAY);
+    DrawText("Pressione ESC to go back", 120, 370, 20, LIGHTGRAY);
     if (IsKeyPressed(KEY_ESCAPE)) game->state = MENU;
 }
