@@ -5,19 +5,24 @@ void DrawMenu(Game *game) {
     if (IsKeyPressed(KEY_UP)) game->menuOption = (game->menuOption - 1 + 4) % 4;
     if (IsKeyPressed(KEY_DOWN)) game->menuOption = (game->menuOption + 1) % 4;
 
-    DrawText("TETRIS", 130, 80, 64, WHITE);
+    DrawText("T", 120, 80, 64, RED);
+    DrawText("E", 170, 80, 64, ORANGE);
+    DrawText("T", 220, 80, 64, YELLOW);
+    DrawText("R", 270, 80, 64, GREEN);
+    DrawText("I", 320, 80, 64, BLUE);
+    DrawText("S", 350, 80, 64, purple);
     
-    DrawRectangle(140, 180, 220, 50, game->menuOption == 0 ? LIGHTGRAY : BLUE);
-    DrawText("Iniciar Jogo", 160, 195, 30, WHITE);
+    DrawRectangle(140, 180, 220, 50, game->menuOption == 0 ? SKYBLUE : DARKBLUE);
+    DrawText("Start Game", 165, 195, 30, WHITE);
     
-    DrawRectangle(140, 250, 220, 50, game->menuOption == 1 ? LIGHTGRAY : BLUE);
-    DrawText("Leaderboard", 160, 265, 30, WHITE);
+    DrawRectangle(140, 250, 220, 50, game->menuOption == 1 ? SKYBLUE : DARKBLUE);
+    DrawText("Leaderboard", 155, 265, 30, WHITE);
     
-    DrawRectangle(140, 320, 220, 50, game->menuOption == 2 ? LIGHTGRAY : BLUE);
-    DrawText("Créditos", 180, 335, 30, WHITE);
+    DrawRectangle(140, 320, 220, 50, game->menuOption == 2 ? SKYBLUE : DARKBLUE);
+    DrawText("Devs", 210, 335, 30, WHITE);
     
-    DrawRectangle(140, 390, 220, 50, game->menuOption == 3 ? LIGHTGRAY : BLUE);
-    DrawText("Sair", 220, 405, 30, WHITE);
+    DrawRectangle(140, 390, 220, 50, game->menuOption == 3 ? SKYBLUE : DARKBLUE);
+    DrawText("Close", 210, 405, 30, WHITE);
 
     if (IsKeyPressed(KEY_ENTER)) {
         if (game->menuOption == 0) {
@@ -50,14 +55,14 @@ void DrawLeaderboard(Game *game) {
 }
 
 void DrawEnterName(Game *game) {
-    DrawText("Novo Recorde!", 90, 100, 48, YELLOW);  // Centralizado
+    DrawText("New Record!", 110, 100, 48, YELLOW);
     DrawText(TextFormat("Score: %d", game->score), 170, 180, 30, WHITE);
-    DrawText("Digite seu nome:", 140, 250, 30, WHITE);
+    DrawText("Insert your name:", 120, 250, 30, WHITE);
     
     DrawRectangle(100, 300, 300, 50, DARKGRAY);
     DrawText(game->playerName, 120, 315, 30, WHITE);
     
-    DrawText("Pressione ENTER para confirmar", 100, 400, 20, LIGHTGRAY);
+    DrawText("Pressione ENTER para confirmar", 90, 400, 20, LIGHTGRAY);
     
     int key = GetCharPressed();
     while (key > 0) {
@@ -93,14 +98,14 @@ void DrawGameOver(Game *game) {
     DrawText(TextFormat("Score: %d", game->score), 170, 170, 30, WHITE);
     DrawText(TextFormat("Time: %02d:%02d", minutes, seconds), 170, 210, 30, WHITE);
 
-    DrawRectangle(100, 280, 300, 50, game->menuOption == 0 ? LIGHTGRAY : BLUE);
-    DrawText("Tentar Novamente", 125, 294, 28, WHITE);
+    DrawRectangle(100, 280, 300, 50, game->menuOption == 0 ? SKYBLUE : DARKBLUE);
+    DrawText("Try again", 190, 294, 28, WHITE);
     
-    DrawRectangle(100, 350, 300, 50, game->menuOption == 1 ? LIGHTGRAY : BLUE);
+    DrawRectangle(100, 350, 300, 50, game->menuOption == 1 ? SKYBLUE : DARKBLUE);
     DrawText("Menu", 215, 364, 32, WHITE);
     
-    DrawRectangle(100, 420, 300, 50, game->menuOption == 2 ? LIGHTGRAY : BLUE);
-    DrawText("Sair", 220, 434, 32, WHITE);
+    DrawRectangle(100, 420, 300, 50, game->menuOption == 2 ? SKYBLUE : DARKBLUE);
+    DrawText("Close", 210, 434, 32, WHITE);
 
     if (IsKeyPressed(KEY_ENTER)) {
         if (game->menuOption == 0) {
@@ -116,10 +121,10 @@ void DrawGameOver(Game *game) {
 }
 
 void DrawCredits(Game *game) {
-    DrawText("Créditos", 150, 100, 50, WHITE);
-    DrawText("Arthur Davila", 170, 180, 30, WHITE);
-    DrawText("Nathália Carvalho", 170, 230, 30, WHITE);
-    DrawText("Maria Eduarda", 170, 280, 30, WHITE);
+    DrawText("Developers", 100, 100, 50, WHITE);
+    DrawText("Arthur Davila", 120, 180, 30, WHITE);
+    DrawText("Nathália Carvalho", 120, 230, 30, WHITE);
+    DrawText("Maria Eduarda", 120, 280, 30, WHITE);
     DrawText("Pressione ESC para voltar", 120, 370, 20, LIGHTGRAY);
     if (IsKeyPressed(KEY_ESCAPE)) game->state = MENU;
 }

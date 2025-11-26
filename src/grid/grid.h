@@ -6,7 +6,7 @@
 
 #define LINHAS 20
 #define COLUNAS 10
-#define CELLSIZE 30   // define o tamanho da célula aqui para todos os módulos
+#define CELLSIZE 30
 
 typedef struct {
     int matriz[LINHAS][COLUNAS];

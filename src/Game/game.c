@@ -23,13 +23,11 @@ double getDropSpeed(int level) {
 const char* getLevelName(int level) {
     switch(level) {
         case 1: 
-            return "Facil";
+            return "Easy";
         case 2: 
-            return "Medio";
+            return "Medium";
         case 3: 
-            return "Dificil";
-        default: 
-            return "MAX";
+            return "Hard";
     }
 }
 
@@ -104,19 +102,19 @@ void DrawHUD(Game *game) {
     int seconds = (int)elapsedTime % 60;
     
     DrawText("Next", 360, 15, 38, WHITE);
-    DrawRectangleRounded((Rectangle){320, 55, 170, 180}, 0.3, 6, (Color){100, 20, 30, 128});
+    DrawRectangleRounded((Rectangle){320, 55, 170, 180}, 0.3, 6, darkGrey);
     DrawBlockInPanel(game->nextBlock, 320, 55, 170, 180);
     
     DrawText("Time", 360, 255, 38, WHITE);
-    DrawRectangleRounded((Rectangle){320, 295, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
+    DrawRectangleRounded((Rectangle){320, 295, 170, 60}, 0.3, 6, darkGrey);
     DrawText(TextFormat("%02d:%02d", minutes, seconds), 360, 310, 35, WHITE);
     
     DrawText("Score", 350, 375, 38, WHITE);
-    DrawRectangleRounded((Rectangle){320, 415, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
-    DrawText(TextFormat("%d", game->score), 395, 430, 40, WHITE);
+    DrawRectangleRounded((Rectangle){320, 415, 170, 60}, 0.3, 6, darkGrey);
+    DrawText(TextFormat("%d", game->score), 380, 430, 40, WHITE);
     
     DrawText("Level", 350, 495, 38, WHITE);
-    DrawRectangleRounded((Rectangle){320, 535, 170, 60}, 0.3, 6, (Color){100, 20, 30, 128});
+    DrawRectangleRounded((Rectangle){320, 535, 170, 60}, 0.3, 6, darkGrey);
     DrawText(TextFormat("%d - %s", game->level, getLevelName(game->level)), 345, 550, 30, WHITE);
 }
 
@@ -158,7 +156,6 @@ BlockNode* getBlocks(void) {
 }
 
 Block getRandomBlock(BlockNode **head) {
-    // Se a lista estiver vazia (a bag acabou), a preenche novamente
     if (*head == NULL) {
         *head = getBlocks();
     }
@@ -173,15 +170,12 @@ Block getRandomBlock(BlockNode **head) {
 
     for (int i = 0; i < idx; i++) {
         prev = aux;
-        // printf("ID do bloco: %d\n", aux->block.id);
         aux = aux->next;
     }
 
-    // Remove o nó da lista
     if (prev) prev->next = aux->next;
     else *head = aux->next;
 
-    // Copia o bloco escolhido (a nova cópia será o currentBlock/nextBlock)
     Block chosen = aux->block; 
 
     free(aux);

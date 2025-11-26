@@ -12,6 +12,6 @@ extern const Color purple;
 extern const Color cyan;
 extern const Color blue;
 
-Color *getCellColors(); // Agora retorna o ponteiro para o array estático de 8 cores.
+Color *getCellColors();
 
 #endif

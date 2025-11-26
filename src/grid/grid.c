@@ -46,19 +46,19 @@ bool outSide( Block *block,int posX, int posY) {
 }
 bool isCellEmpty(int x, int y, Grid *grid) {
     if (y < 0 || y >= LINHAS || x < 0 || x >= COLUNAS) {
-        return false; // Fora dos limites da grade
+        return false;
     }
-    return grid->matriz[y][x] == 0; // Retorna true se a célula estiver vazia
+    return grid->matriz[y][x] == 0; 
 }
 
 bool isRowFull(Grid *grid, int row)
 {
     for (int j = 0; j < COLUNAS; j++) {
         if (grid->matriz[row][j] == 0) {
-            return false; // Encontrou uma célula vazia, a linha não está cheia
+            return false;
         }
     }
-    return true; // Todas as células estão preenchidas
+    return true;
 }
 
 void clearRow(Grid *grid, int row)

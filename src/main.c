@@ -29,7 +29,7 @@ int main(void) {
 
     while (!WindowShouldClose()) {
         BeginDrawing();
-        ClearBackground(DARKBLUE);
+        ClearBackground(BLACK);
 
         switch (game.state) {
             case MENU:

@@ -21,7 +21,7 @@ typedef enum {
 
 typedef struct {
     Grid grid;
-    BlockNode *nextBlocks;   // lista encadeada de blocos disponíveis
+    BlockNode *nextBlocks;
     Block currentBlock;
     Block nextBlock;
     bool gameOver;

@@ -12,12 +12,10 @@ const Color cyan = (Color){21, 204, 209, 255};
 const Color blue = (Color){13, 64, 216, 255};
 
 Color *getCellColors() {
-    // Array estático que existe durante toda a execução do programa
     static Color allColors[8]; 
     static int isInitialized = 0;
 
     if (!isInitialized) {
-        // Inicializa o array de cores (índice 0 = Cor da célula vazia)
         allColors[0] = darkGrey; 
         allColors[1] = green; 
         allColors[2] = red; 
