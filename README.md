@@ -1,4 +1,4 @@
-# Tetris – Projeto Acadêmico em C com Raylib
+# Tetris – Projeto em C com Raylib
 
 ## 🎮 Sobre o Projeto
 
@@ -8,7 +8,7 @@ Nosso foco foi criar um **casual game funcional, organizado e de fácil manuten�
 
 ---
 
-## 🚧 Estrutura do Projeto
+## 🚧 Estrutura do projeto
 
 O projeto está organizado de forma modular, separando cada responsabilidade em diretórios próprios para maior clareza e escalabilidade.
 
@@ -27,7 +27,7 @@ O projeto está organizado de forma modular, separando cada responsabilidade em 
 
 ---
 
-## ▶️ Como Executar
+## ▶️ Como executar
 
 Certifique‑se de ter a biblioteca **raylib** configurada corretamente no projeto.
 
@@ -60,6 +60,13 @@ Após isso, basta executar o arquivo gerado:
 
 ---
 
+## 📌 Possíveis melhorias futuras
+* Tela de Game Over estilizada
+* Implementar efeitos sonoros
+* Adicionar animações na limpeza de linhas
+
+---
+  
 ## 👥 Contribuidores
 
 * Arthur D'ávila
@@ -68,7 +75,6 @@ Após isso, basta executar o arquivo gerado:
 
 ---
 
-## 📌 Possíveis Melhorias Futuras
-* Tela de Game Over estilizada
-* Implementar efeitos sonoros
-* Adicionar animações na limpeza de linhas
+## 📌 Demonstração
+[![Assista ao vídeo](https://img.youtube.com/vi/e-55tQV10rM/maxresdefault.jpg)](https://www.youtube.com/watch?v=e-55tQV10rM)
+
