@@ -35,9 +35,16 @@ A compilação deve ser feita a partir da pasta `src` usando o comando:
 
 ```bash
 cd src
-gcc main.c blocks/blocks.c colors/colors.c grid/grid.c Game/game.c menu/menu.c -o Tetris.exe \
-   -I./raylib/include -I./blocks -I./colors -I./grid -I./Game -I./Menu \
-   -L./raylib/lib -lraylib -lopengl32 -lgdi32 -lwinmm -mwindows
+gcc main.c \
+blocks/blocks.c \
+colors/colors.c \
+grid/grid.c \
+Game/game.c \
+menu/menu.c \
+leaderboard/leaderboard.c \
+-Iblocks -Icolors -Igrid -IGame -Imenu -Ileaderboard \
+-o tetris \
+-lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 ```
 
 Após isso, basta executar o arquivo gerado:
