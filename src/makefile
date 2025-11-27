@@ -1,18 +1,20 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -Icolors -Iblocks -Igrid -IGame
-LDFLAGS = -lraylib -lm -lpthread -ldl -lGL -lrt -lX11
+CFLAGS = -Iblocks -Icolors -Igrid -IGame -Imenu -Ileaderboard
+LIBS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 
-SRC = main.c colors/colors.c blocks/blocks.c grid/grid.c Game/game.c
+SRC = main.c \
+      blocks/blocks.c \
+      colors/colors.c \
+      grid/grid.c \
+      Game/game.c \
+      menu/menu.c \
+      leaderboard/leaderboard.c
+
 OBJ = $(SRC:.c=.o)
-TARGET = main
 
-all: $(TARGET)
-
-$(TARGET): $(OBJ)
-	$(CC) $(OBJ) -o $(TARGET) $(LDFLAGS)
-
-run: $(TARGET)
-	./$(TARGET)
+tetris: $(OBJ)
+	$(CC) $(OBJ) -o tetris $(LIBS)
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(OBJ) tetris
+

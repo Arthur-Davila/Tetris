@@ -3,7 +3,7 @@
 
 #include "../grid/grid.h"
 #include "../blocks/blocks.h" 
-#include "../Leaderboard/leaderboard.h"
+#include "../leaderboard/leaderboard.h"
 
 typedef struct BlockNode {
     Block block;
